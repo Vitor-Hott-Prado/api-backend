@@ -12,12 +12,13 @@ import {
   HttpCode,
   HttpStatus,
   ParseIntPipe, // Pipe para transformar e validar o ID
+  UseGuards,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create.product.dto';
 import { UpdateProductDto } from './dto/update.product.dto';
 import { ProductEntity } from './entities/prduct.entity';
-
+import { AuthGuard } from '@nestjs/passport';
 /**
  * O Controller é responsável por receber as requisições HTTP,
  * delegar a lógica de negócio para o Service e retornar a resposta.
@@ -25,6 +26,7 @@ import { ProductEntity } from './entities/prduct.entity';
  * para todos os endpoints definidos nesta classe.
  */
 @Controller('products')
+@UseGuards(AuthGuard('jwt')) // Aplica o guard de autenticação JWT a todas as rotas do controller
 export class ProductsController {
   /**
    * O construtor injeta a instância do ProductsService,
